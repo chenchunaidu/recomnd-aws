@@ -1,4 +1,5 @@
-import { FC, ReactNode, useEffect, useRef } from "react";
+import type { FC, ReactNode } from "react";
+import { useEffect, useRef } from "react";
 import { useState } from "react";
 import React from "react";
 import { twMerge } from "tailwind-merge";

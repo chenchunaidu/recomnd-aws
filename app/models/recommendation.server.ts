@@ -83,13 +83,13 @@ export const createRecommendation = async ({
   const db = await arc.tables();
   const newRecommendation = await db?.recommendations.put({
     ...recommendation,
-    id: uuidv4(),
+    sk: uuidv4(),
     pk: userId,
     title: "",
     description: "",
     media: "",
     fullMeta: {},
-    sk: groupId,
+    groupId: groupId,
   });
   updateMeta(newRecommendation);
   return newRecommendation;
@@ -101,7 +101,7 @@ export const getRecommendationsByUserId = async (userId: string) => {
     KeyConditionExpression: "pk = :pk",
     ExpressionAttributeValues: { ":pk": userId },
   });
-  return recommendations.Items;
+  return recommendations.Items.map((item) => ({ ...item, id: item?.sk }));
 };
 
 export const getRecommendationsByGroupId = async (

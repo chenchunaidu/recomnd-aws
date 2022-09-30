@@ -14,7 +14,7 @@ user
 
 recommendations
   pk *String  # userId
-  sk **Number # groupId
+  sk **String # id
 
 groups
   pk *String  # userId
