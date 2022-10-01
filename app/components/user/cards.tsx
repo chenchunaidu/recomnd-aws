@@ -1,4 +1,8 @@
+import { NewspaperIcon } from "@heroicons/react/24/outline";
 import type { FC } from "react";
+import { Link } from "react-router-dom";
+import Button from "../common/button";
+import Text from "../common/text";
 import type { CardProps } from "./card";
 import Card from "./card";
 
@@ -7,6 +11,17 @@ interface CardsProps {
 }
 
 const Cards: FC<CardsProps> = ({ cards }) => {
+  if (!cards.length) {
+    return (
+      <div className="flex h-full w-full flex-col items-center justify-center space-y-4">
+        <NewspaperIcon className="h-32 w-32 font-thin text-gray-700"></NewspaperIcon>
+        <Text>Fill up this place with your recommendations</Text>
+        <Link to="/home/recommendations/new">
+          <Button>Add your first recommendation</Button>
+        </Link>
+      </div>
+    );
+  }
   return (
     <div className="grid grid-cols-1 gap-2 md:grid-cols-3 md:gap-3 lg:grid-cols-4 lg:gap-4 ">
       {cards?.map((card) => (
