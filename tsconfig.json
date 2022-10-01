@@ -1,6 +1,12 @@
 {
-  "exclude": ["./cypress","./cypress.config.ts"],
-  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["./cypress", "./cypress.config.ts"],
+  "include": [
+    "remix.env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/events/scrap-and-update-recommendation/index.mjs",
+    "src/lib/scrap.mjs"
+  ],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2019"],
     "types": ["vitest/globals"],

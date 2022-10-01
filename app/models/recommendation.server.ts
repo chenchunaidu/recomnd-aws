@@ -76,23 +76,24 @@ export const updateMeta = async (recommendation: Recommendations) => {
 };
 
 export const createRecommendation = async ({
-  groupId,
   userId,
-  ...recommendation
-}: Pick<Recommendations, "url" | "userId" | "groupId">) => {
+  url,
+}: Pick<Recommendations, "url" | "userId">) => {
   const db = await arc.tables();
   const newRecommendation = await db?.recommendations.put({
-    ...recommendation,
+    url,
     sk: uuidv4(),
     pk: userId,
     title: "",
     description: "",
     media: "",
     fullMeta: {},
-    groupId: groupId,
   });
-  updateMeta(newRecommendation);
-  return newRecommendation;
+
+  await arc.queues.publish({
+    name: "scrap-and-update-recommendation",
+    payload: { id: newRecommendation.sk, userId: newRecommendation.pk },
+  });
 };
 
 export const getRecommendationsByUserId = async (userId: string) => {
