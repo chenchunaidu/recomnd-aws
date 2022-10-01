@@ -5,7 +5,7 @@
     "**/*.ts",
     "**/*.tsx",
     "src/events/scrap-and-update-recommendation/index.mjs",
-    "src/lib/scrap.mjs"
+    "src/queues/scrap-and-update-recommendation/scrap.mjs"
   ],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2019"],
