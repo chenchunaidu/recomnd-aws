@@ -10,7 +10,6 @@ export type Group = {
 
 export const createGroup = async ({ userId, ...group }: Group) => {
   const db = await arc.tables();
-  console.log(group, userId);
   const newGroup = await db.groups.put({ pk: userId, ...group });
   return newGroup;
 };

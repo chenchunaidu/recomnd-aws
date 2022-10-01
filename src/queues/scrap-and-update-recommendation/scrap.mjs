@@ -1,20 +1,17 @@
 import arc from "@architect/functions";
 import ogs from "open-graph-scraper";
+import retry from "async-retry";
 
 export const getMetaData = (url) => {
-  try {
-    const options = {
-      url,
-      timeout: 10000,
-      headers: {
-        "user-agent": "Googlebot/2.1 (+http://www.google.com/bot.html)",
-      },
-    };
-    const data = ogs(options);
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
+  const options = {
+    url,
+    timeout: 10000,
+    headers: {
+      "user-agent": "Googlebot/2.1 (+http://www.google.com/bot.html)",
+    },
+  };
+  const data = ogs(options);
+  return data;
 };
 
 export const getImage = (image) => {
@@ -23,32 +20,48 @@ export const getImage = (image) => {
   return image?.url;
 };
 
-export const transformMeta = (meta) => {
-  if (meta.result.success === false) {
+const getMetaDataWithRetry = async (url) => {
+  try {
+    const result = await retry(
+      async (bail) => {
+        const res = await getMetaData(url);
+        return res;
+      },
+      {
+        retries: 3,
+      }
+    );
+    return { meta: result, error: null };
+  } catch (error) {
+    return { meta: null, error: error };
+  }
+};
+
+export const transformMeta = ({ meta, error }) => {
+  if (error) {
     return {
       title: "",
       description: "",
       media: "",
+      scrapStatus: "failed",
     };
   }
   return {
-    title: meta.result.ogTitle || "",
-    description: meta.result.ogDescription || "",
-    media: getImage(meta.result.ogImage),
+    title: meta?.result?.ogTitle || "",
+    description: meta?.result?.ogDescription || "",
+    media: getImage(meta?.result?.ogImage),
+    scrapStatus: "success",
   };
 };
 
 export const updateMeta = async (recommendation) => {
-  const meta = await getMetaData(recommendation.url);
-  console.log(meta);
-  if (!meta) return;
+  const data = await getMetaDataWithRetry(recommendation.url);
   const db = await arc.tables();
   const updatedData = await db?.recommendations.put({
     ...recommendation,
-    ...transformMeta(meta),
-    fullMeta: JSON.stringify(meta.result),
+    ...transformMeta(data),
+    fullMeta: JSON.stringify(data?.meta?.result),
   });
-  console.log(updatedData);
   return updatedData;
 };
 

@@ -20,6 +20,7 @@ export type Recommendations = {
   media: string;
   createdAt: string;
   fullMeta: string;
+  scrapStatus: "inprogress" | "failed" | "success";
 };
 
 export const getMetaData = (url: string) => {
@@ -87,6 +88,7 @@ export const createRecommendation = async ({
     title: "",
     description: "",
     media: "",
+    scrapStatus: "inprogress",
     fullMeta: {},
   });
 
