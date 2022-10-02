@@ -22,7 +22,7 @@ export default function Homepage() {
 
   return (
     <Container className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between p-4 md:p-0">
         <Heading order="6">Recommendations</Heading>
         <div className="-space-x-2">
           <Link to="/home/recommendations/new">
