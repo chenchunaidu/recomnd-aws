@@ -17,7 +17,6 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function Homepage() {
   const { recommendations, user } = useLoaderData();
-
   return (
     <Container className="space-y-4">
       <div className="flex items-center justify-between">

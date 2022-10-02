@@ -79,7 +79,8 @@ export const updateMeta = async (recommendation: Recommendations) => {
 export const createRecommendation = async ({
   userId,
   url,
-}: Pick<Recommendations, "url" | "userId">) => {
+  groupId,
+}: Pick<Recommendations, "url" | "userId" | "groupId">) => {
   const db = await arc.tables();
   const newRecommendation = await db?.recommendations.put({
     url,
@@ -90,6 +91,7 @@ export const createRecommendation = async ({
     media: "",
     scrapStatus: "inprogress",
     fullMeta: {},
+    groupId,
   });
 
   await arc.queues.publish({
@@ -112,11 +114,11 @@ export const getRecommendationsByGroupId = async (
   groupId: string
 ) => {
   const db = await arc.tables();
-  const recommendations = await db.recommendations.query({
-    KeyConditionExpression: "pk = :pk AND sk = :sk",
-    ExpressionAttributeValues: { ":pk": userId, ":sk": groupId },
+  const recommendations = await db.recommendations.scan({
+    FilterExpression: "pk = :pk AND groupId = :groupId",
+    ExpressionAttributeValues: { ":pk": userId, ":groupId": groupId },
   });
-  return recommendations.Items;
+  return recommendations.Items.map((item) => ({ ...item, id: item?.sk }));
 };
 
 export async function deleteRecommendation(id: string) {

@@ -17,7 +17,7 @@ const Cards: FC<CardsProps> = ({ cards, showEmptyCardsMsg }) => {
       return (
         <div className="flex h-full w-full flex-col items-center justify-center space-y-4">
           <NewspaperIcon className="h-32 w-32 font-thin text-gray-700"></NewspaperIcon>
-          <Text>Fill up this place with your recommendations</Text>
+          <Text>Fill up this space with your recommendations</Text>
           <Link to="/home/recommendations/new">
             <Button>Add your first recommendation</Button>
           </Link>

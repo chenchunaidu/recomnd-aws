@@ -8,12 +8,14 @@ export const createRecommendationFormData: FormInputProps[] = [
       id: "url",
       name: "url",
       autoFocus: true,
-      placeholder: "",
+      placeholder: "https://www.hotstar.com/in/movies/rrr/1260108122",
       required: true,
     },
+    helperText: "Enter url of the recommendation",
   },
 ];
 
 export const createRecommendationValidationSchema = yup.object().shape({
   url: yup.string().required().url(),
+  groupId: yup.string(),
 });

@@ -26,7 +26,6 @@ export const getGroupsByUserId = async (userId: string) => {
 
 export const getGroupByGroupId = async (userId: string, groupId: string) => {
   const db = await arc.tables();
-  console.log(userId, groupId);
   const groups = await db.groups.query({
     KeyConditionExpression: "pk= :pk AND sk = :sk",
     ExpressionAttributeValues: { ":sk": groupId, ":pk": userId },

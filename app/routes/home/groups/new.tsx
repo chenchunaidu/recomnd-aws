@@ -1,4 +1,8 @@
-import { useActionData, useTransition } from "@remix-run/react";
+import {
+  useActionData,
+  useSearchParams,
+  useTransition,
+} from "@remix-run/react";
 import type { ActionFunction } from "@remix-run/server-runtime";
 import { redirect } from "@remix-run/server-runtime";
 import { validateFormData } from "~/components/common/form/utils";
@@ -12,7 +16,7 @@ import { createGroup } from "~/models/group.server";
 import { requiredUser } from "~/lib/auth/auth";
 import Container from "~/components/common/container";
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, params }) => {
   const user = await requiredUser(request);
   const formData = await request.formData();
   const { errors, formOutput } = await validateFormData(
@@ -20,10 +24,11 @@ export const action: ActionFunction = async ({ request }) => {
     createGroupFormData,
     validationSchema
   );
+  const redirectTo = formData.get("redirectTo") as string;
   if (!errors) {
     try {
       const res = await createGroup({ ...formOutput, userId: user.id });
-      return redirect("/home/groups");
+      return redirect(redirectTo);
     } catch (error) {
       console.log(error);
       return {};
@@ -33,13 +38,18 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 export default function CreateGroupPage() {
+  const [searchParams] = useSearchParams();
+  const redirectTo = searchParams.get("redirectTo") || "/home/groups";
   const actionData = useActionData() as CreateGroupActionData;
-
   const transition = useTransition();
 
   return (
     <Container className="h-full w-full md:w-1/2">
-      <CreateGroup actionData={actionData} transition={transition} />
+      <CreateGroup
+        actionData={actionData}
+        transition={transition}
+        redirectTo={redirectTo}
+      />
     </Container>
   );
 }
