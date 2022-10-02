@@ -14,7 +14,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 export default function GroupsPage() {
-  const { groups, user } = useLoaderData();
+  const { groups } = useLoaderData();
 
   return (
     <Container className="space-y-4">
@@ -25,7 +25,7 @@ export default function GroupsPage() {
             <PlusIcon className="h-6 w-6 hover:via-violet-500" />
           </Link>
         </div>
-        <HomeGroups groups={groups} showEmptyCardsMsg />
+        <HomeGroups groups={groups} showEmptyCardsMsg link={`/home/groups`} />
       </div>
     </Container>
   );

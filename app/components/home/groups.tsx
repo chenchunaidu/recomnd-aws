@@ -9,9 +9,14 @@ import { UserGroupIcon } from "@heroicons/react/24/outline";
 interface HomeGroupsProps {
   groups: Group[];
   showEmptyCardsMsg?: boolean;
+  link?: string;
 }
 
-const HomeGroups: FC<HomeGroupsProps> = ({ groups, showEmptyCardsMsg }) => {
+const HomeGroups: FC<HomeGroupsProps> = ({
+  groups,
+  showEmptyCardsMsg,
+  link,
+}) => {
   if (!groups?.length) {
     if (showEmptyCardsMsg) {
       return (
@@ -36,6 +41,7 @@ const HomeGroups: FC<HomeGroupsProps> = ({ groups, showEmptyCardsMsg }) => {
             description={group.description}
             id={group.id}
             key={group.id}
+            link={link}
           />
         ))}
       </div>

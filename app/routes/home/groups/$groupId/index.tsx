@@ -28,6 +28,7 @@ export default function GroupPage() {
         view="grid"
         recommendations={recommendations}
         groupLink={`${location}/users/${group?.userId}/groups/${group?.id}`}
+        isAdmin={true}
       />
     </Container>
   );
