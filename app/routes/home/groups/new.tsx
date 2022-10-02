@@ -23,7 +23,7 @@ export const action: ActionFunction = async ({ request }) => {
   if (!errors) {
     try {
       const res = await createGroup({ ...formOutput, userId: user.id });
-      return redirect("/home");
+      return redirect("/home/groups");
     } catch (error) {
       console.log(error);
       return {};

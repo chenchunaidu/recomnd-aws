@@ -109,12 +109,12 @@ export const getRecommendationsByUserId = async (userId: string) => {
 
 export const getRecommendationsByGroupId = async (
   userId: string,
-  groupId: number
+  groupId: string
 ) => {
   const db = await arc.tables();
   const recommendations = await db.recommendations.query({
-    KeyConditionExpression: "pk = :pk",
-    ExpressionAttributeValues: { ":pk": userId },
+    KeyConditionExpression: "pk = :pk AND sk = :sk",
+    ExpressionAttributeValues: { ":pk": userId, ":sk": groupId },
   });
   return recommendations.Items;
 };

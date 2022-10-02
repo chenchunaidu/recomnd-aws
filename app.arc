@@ -24,3 +24,4 @@ recommendations
 
 groups
   pk *String  # userId
+  sk **String # id

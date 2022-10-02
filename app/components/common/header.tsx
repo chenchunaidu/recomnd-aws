@@ -23,10 +23,11 @@ export const NavLink: FC<NavLinkProps> = ({ children, to }) => {
 
 const Header: FC<HeaderProps> = ({ userId }) => {
   return (
-    <div className="flex w-full items-center justify-between border p-4">
+    <div className="flex w-full items-center justify-between border bg-white p-4">
       <Image src={logo} className="h-10" />
       <div className="mr-16 flex space-x-8">
         <NavLink to="/home">Home</NavLink>
+        <NavLink to="/home/groups">Groups</NavLink>
         <NavLink to="/account">Account</NavLink>
       </div>
     </div>

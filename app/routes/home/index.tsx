@@ -46,7 +46,7 @@ export default function Homepage() {
           </Tooltip>
         </div>
       </div>
-      <Cards cards={recommendations} />
+      <Cards cards={recommendations} showEmptyCardsMsg={true} />
     </Container>
   );
 }
