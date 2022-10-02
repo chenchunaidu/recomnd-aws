@@ -1,5 +1,5 @@
 import type { LoaderFunction } from "@remix-run/node";
-import { Link, useLoaderData, useLocation, useParams } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import Button from "~/components/common/button";
 import Container from "~/components/common/container";
 import Heading from "~/components/common/heading";
