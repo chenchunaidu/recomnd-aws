@@ -30,5 +30,7 @@ export const getGroupByGroupId = async (userId: string, groupId: string) => {
     KeyConditionExpression: "pk= :pk AND sk = :sk",
     ExpressionAttributeValues: { ":sk": groupId, ":pk": userId },
   });
-  return groups.Items.map((group) => ({ ...group, id: group.sk }));
+  return (
+    groups.Items.map((group) => ({ ...group, id: group.sk, userId }))?.[0] || {}
+  );
 };

@@ -1,5 +1,5 @@
 import type { LoaderFunction } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData, useLocation, useParams } from "@remix-run/react";
 import Button from "~/components/common/button";
 import Container from "~/components/common/container";
 import Heading from "~/components/common/heading";
@@ -7,7 +7,7 @@ import Cards from "~/components/user/cards";
 import { requiredUser } from "~/lib/auth/auth";
 import { getRecommendationsByUserId } from "~/models/recommendation.server";
 import { PlusIcon, ShareIcon } from "@heroicons/react/24/solid";
-import Tooltip from "~/components/common/tooltip";
+import CopyToClipBoardButton from "~/components/common/copy-to-clipboard";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await requiredUser(request);
@@ -17,6 +17,9 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function Homepage() {
   const { recommendations, user } = useLoaderData();
+  const location =
+    typeof window !== "undefined" ? window?.location?.origin : "";
+
   return (
     <Container className="space-y-4">
       <div className="flex items-center justify-between">
@@ -27,22 +30,11 @@ export default function Homepage() {
               <PlusIcon className="h-6 w-6"></PlusIcon>
             </Button>
           </Link>
-          <Tooltip
-            content="Link copied to clipboard"
-            className="-ml-24 w-48 bg-violet-600"
-            tooltipTrigger="click"
+          <CopyToClipBoardButton
+            copyText={`${location}/users/${user?.id || ""}`}
           >
-            <Button
-              variant="link"
-              onClick={() => {
-                navigator.clipboard.writeText(
-                  `${window.location.origin}/users/${user?.id || ""}`
-                );
-              }}
-            >
-              <ShareIcon className="h-5 w-5"></ShareIcon>
-            </Button>
-          </Tooltip>
+            <ShareIcon className="h-5 w-5" />
+          </CopyToClipBoardButton>
         </div>
       </div>
       <Cards cards={recommendations} showEmptyCardsMsg={true} />

@@ -1,15 +1,20 @@
-import type { Group } from "~/models/group.server";
+import { getGroupByGroupId, Group } from "~/models/group.server";
 import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { getRecommendationsByUserId } from "~/models/recommendation.server";
+import { getRecommendationsByGroupId } from "~/models/recommendation.server";
 import { getUserById } from "~/models/user.server";
 import Cards from "~/components/user/cards";
+import GroupComp from "~/components/user/group";
 
 export const loader: LoaderFunction = async ({ params }) => {
-  if (!params.userId) return { groups: [] };
-  const cards = await getRecommendationsByUserId(params.userId);
+  if (!params.userId || !params.groupId) return { groups: [] };
+  const recommendations = await getRecommendationsByGroupId(
+    params.userId,
+    params.groupId
+  );
   const user = await getUserById(params.userId);
-  return { cards: cards, user };
+  const group = await getGroupByGroupId(params.userId, params.groupId);
+  return { recommendations: recommendations, user, group };
 };
 
 export const meta: MetaFunction = ({ data }) => {
@@ -35,8 +40,8 @@ export const meta: MetaFunction = ({ data }) => {
   };
 };
 
-export default function UserPage() {
-  const { cards } = useLoaderData();
-
-  return <Cards cards={cards} />;
+export default function UserGroupPage() {
+  const { recommendations, group = {} } = useLoaderData();
+  console.log(group);
+  return <GroupComp {...group} recommendations={recommendations} />;
 }

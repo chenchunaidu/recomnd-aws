@@ -12,16 +12,23 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   if (groupId) {
     const recommendations = await getRecommendationsByGroupId(user.id, groupId);
     const group = await getGroupByGroupId(user.id, groupId);
-    return { recommendations, group: group?.[0] || {} };
+    return { recommendations, group: group };
   }
 };
 
 export default function GroupPage() {
   const { group, recommendations } = useLoaderData();
+  const location =
+    typeof window !== "undefined" ? window?.location?.origin : "";
 
   return (
     <Container className="flex h-full flex-col justify-between space-y-4 pb-4">
-      <Group {...group} view="grid" recommendations={recommendations} />
+      <Group
+        {...group}
+        view="grid"
+        recommendations={recommendations}
+        groupLink={`${location}/users/${group?.userId}/groups/${group?.id}`}
+      />
     </Container>
   );
 }
