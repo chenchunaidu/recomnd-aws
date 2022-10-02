@@ -1,7 +1,11 @@
 import type { Recommendations } from "~/models/recommendation.server";
 import type { FC } from "react";
+import { EllipsisHorizontalIcon, TrashIcon } from "@heroicons/react/24/outline";
+import Button from "../common/button";
 
-interface CardProps extends Recommendations {}
+interface CardProps extends Recommendations {
+  isAdmin?: boolean;
+}
 
 const Card: FC<CardProps> = (recommendation) => {
   const fallback = !recommendation.media;
@@ -9,7 +13,7 @@ const Card: FC<CardProps> = (recommendation) => {
   return (
     <div
       key={recommendation.id}
-      className="relative aspect-video w-full snap-center md:h-36 md:w-auto"
+      className="group relative aspect-video w-full transition delay-150 ease-in-out md:h-36 md:w-auto md:hover:scale-125"
     >
       <a href={recommendation.url} target="_blank" rel="noreferrer">
         {fallback ? (
@@ -24,22 +28,34 @@ const Card: FC<CardProps> = (recommendation) => {
           />
         )}
         {!recommendation.title && !recommendation.description ? (
-          <div className="line-clamp-2 absolute top-1/4 break-all p-4 text-xs text-gray-50">
+          <div className="absolute top-1/4 break-all p-4 text-xs text-gray-50 line-clamp-2">
             {recommendation.url}
           </div>
         ) : (
           <div
             className={`absolute bottom-0 w-full rounded-md bg-gradient-to-b from-transparent to-black px-2 pb-2 pt-16`}
           >
-            <div className="line-clamp-1 text-sm font-bold text-white">
+            <div className="text-sm font-bold text-white line-clamp-1">
               {recommendation.title}
             </div>
-            <div className="line-clamp-3 text-xs text-white text-opacity-60">
+            <div className="text-xs text-white text-opacity-60 line-clamp-3">
               {recommendation.description}
             </div>
           </div>
         )}
       </a>
+      {recommendation?.isAdmin ? (
+        <div className="absolute top-2 right-2 space-x-2  transition delay-150 ease-in-out group-hover:flex md:hidden">
+          <Button variant="link" className="bg-white md:px-1 md:py-1">
+            <TrashIcon className="white h-4 w-4" />
+          </Button>
+          <Button variant="link" className="bg-white md:px-1 md:py-1">
+            <EllipsisHorizontalIcon className="white h-4 w-4" />
+          </Button>
+        </div>
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 };

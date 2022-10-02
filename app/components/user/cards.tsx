@@ -9,9 +9,10 @@ import Card from "./card";
 interface CardsProps {
   cards: CardProps[];
   showEmptyCardsMsg?: boolean;
+  isAdmin?: boolean;
 }
 
-const Cards: FC<CardsProps> = ({ cards, showEmptyCardsMsg }) => {
+const Cards: FC<CardsProps> = ({ cards, showEmptyCardsMsg, isAdmin }) => {
   if (!cards?.length) {
     if (showEmptyCardsMsg) {
       return (
@@ -29,7 +30,7 @@ const Cards: FC<CardsProps> = ({ cards, showEmptyCardsMsg }) => {
   return (
     <div className="grid grid-cols-1 gap-2 md:grid-cols-3 md:gap-3 lg:grid-cols-4 lg:gap-4 ">
       {cards?.map((card) => (
-        <Card key={card.id} {...card} />
+        <Card key={card.id} {...card} isAdmin={isAdmin} />
       ))}
     </div>
   );

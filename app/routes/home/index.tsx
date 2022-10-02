@@ -37,7 +37,7 @@ export default function Homepage() {
           </CopyToClipBoardButton>
         </div>
       </div>
-      <Cards cards={recommendations} showEmptyCardsMsg={true} />
+      <Cards cards={recommendations} showEmptyCardsMsg={true} isAdmin={true} />
     </Container>
   );
 }
