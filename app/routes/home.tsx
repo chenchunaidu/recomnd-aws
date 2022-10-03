@@ -12,7 +12,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 export default function HomePage() {
   const userId = useLoaderData();
   return (
-    <Fullscreen className="items-center flex flex-col space-y-4 bg-gray-50">
+    <Fullscreen className="flex flex-col items-center space-y-4 bg-gray-50">
       <Header userId={userId} />
       <Outlet />
     </Fullscreen>

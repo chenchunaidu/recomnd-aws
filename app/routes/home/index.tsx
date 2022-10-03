@@ -1,11 +1,19 @@
-import type { LoaderFunction } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
+import type { ActionFunction, LoaderFunction } from "@remix-run/node";
+import {
+  Link,
+  useActionData,
+  useLoaderData,
+  useTransition,
+} from "@remix-run/react";
 import Button from "~/components/common/button";
 import Container from "~/components/common/container";
 import Heading from "~/components/common/heading";
 import Cards from "~/components/user/cards";
 import { requiredUser } from "~/lib/auth/auth";
-import { getRecommendationsByUserId } from "~/models/recommendation.server";
+import {
+  deleteRecommendation,
+  getRecommendationsByUserId,
+} from "~/models/recommendation.server";
 import { PlusIcon, ShareIcon } from "@heroicons/react/24/solid";
 import CopyToClipBoardButton from "~/components/common/copy-to-clipboard";
 
@@ -15,10 +23,23 @@ export const loader: LoaderFunction = async ({ request }) => {
   return { recommendations: data, user };
 };
 
+export const action: ActionFunction = async ({ request }) => {
+  const user = await requiredUser(request);
+  let formData = await request.formData();
+  let recommendationId = formData.get("recommendationId");
+  if (recommendationId && typeof recommendationId === "string") {
+    await deleteRecommendation(user.id, recommendationId);
+  }
+  return { recommendationId };
+};
+
 export default function Homepage() {
   const { recommendations, user } = useLoaderData();
   const location =
     typeof window !== "undefined" ? window?.location?.origin : "";
+  const actionData = useActionData();
+  const transition = useTransition();
+  console.log(transition?.submission, "transition");
 
   return (
     <Container className="space-y-4">

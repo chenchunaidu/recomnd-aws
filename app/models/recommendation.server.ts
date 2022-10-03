@@ -11,7 +11,7 @@ interface Metadata {
 }
 
 export type Recommendations = {
-  id: number;
+  id: string;
   userId: string;
   groupId: number;
   url: string;
@@ -121,7 +121,7 @@ export const getRecommendationsByGroupId = async (
   return recommendations.Items.map((item) => ({ ...item, id: item?.sk }));
 };
 
-export async function deleteRecommendation(id: string) {
+export async function deleteRecommendation(userId: string, id: string) {
   const db = await arc.tables();
-  await db.recommendations.delete({ pk: id });
+  await db.recommendations.delete({ sk: id, pk: userId });
 }

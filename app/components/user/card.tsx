@@ -1,7 +1,9 @@
 import type { Recommendations } from "~/models/recommendation.server";
 import type { FC } from "react";
-import { EllipsisHorizontalIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { EllipsisHorizontalIcon } from "@heroicons/react/24/outline";
 import Button from "../common/button";
+import { useFetcher } from "@remix-run/react";
+import DeleteRecommendationButton from "./delete-button";
 
 interface CardProps extends Recommendations {
   isAdmin?: boolean;
@@ -9,11 +11,16 @@ interface CardProps extends Recommendations {
 
 const Card: FC<CardProps> = (recommendation) => {
   const fallback = !recommendation.media;
+  const deleteCard = useFetcher();
+  const deleteInProgress =
+    deleteCard.state === "submitting" || deleteCard.state === "loading";
 
   return (
     <div
       key={recommendation.id}
-      className="group relative aspect-video w-full transition delay-150 ease-in-out md:h-36 md:w-auto md:hover:scale-125"
+      className={`group relative aspect-video w-full transition delay-150 ease-in-out md:h-36 md:w-auto md:hover:scale-125 ${
+        deleteInProgress ? "grayscale" : ""
+      }`}
     >
       <a href={recommendation.url} target="_blank" rel="noreferrer">
         {fallback ? (
@@ -44,11 +51,14 @@ const Card: FC<CardProps> = (recommendation) => {
           </div>
         )}
       </a>
-      {recommendation?.isAdmin ? (
-        <div className="absolute top-2 right-2 space-x-2  transition delay-150 ease-in-out group-hover:flex md:hidden">
-          <Button variant="link" className="bg-white md:px-1 md:py-1">
-            <TrashIcon className="white h-4 w-4" />
-          </Button>
+      {recommendation?.isAdmin &&
+      recommendation.scrapStatus !== "inprogress" ? (
+        <div className="absolute top-2 right-2  flex space-x-2 transition delay-150  ease-in-out group-hover:flex md:hidden">
+          <DeleteRecommendationButton
+            id={recommendation.id}
+            fetcher={deleteCard}
+            deleteInProgress={deleteInProgress}
+          />
           <Button variant="link" className="bg-white md:px-1 md:py-1">
             <EllipsisHorizontalIcon className="white h-4 w-4" />
           </Button>
