@@ -37,9 +37,6 @@ export default function Homepage() {
   const { recommendations, user } = useLoaderData();
   const location =
     typeof window !== "undefined" ? window?.location?.origin : "";
-  const actionData = useActionData();
-  const transition = useTransition();
-  console.log(transition?.submission, "transition");
 
   return (
     <Container className="space-y-4">
