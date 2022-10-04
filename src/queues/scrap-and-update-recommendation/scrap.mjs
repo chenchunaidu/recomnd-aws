@@ -33,6 +33,7 @@ const getMetaDataWithRetry = async (url) => {
     );
     return { meta: result, error: null };
   } catch (error) {
+    console.log(error);
     return { meta: null, error: error };
   }
 };
@@ -44,6 +45,7 @@ export const transformMeta = ({ meta, error }) => {
       description: "",
       media: "",
       scrapStatus: "failed",
+      error: JSON.stringify(error),
     };
   }
   return {
