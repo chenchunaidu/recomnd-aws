@@ -121,6 +121,18 @@ export const getRecommendationsByGroupId = async (
   return recommendations.Items.map((item) => ({ ...item, id: item?.sk }));
 };
 
+export const getRecommendationsById = async (userId: string, id: string) => {
+  const db = await arc.tables();
+  const recommendations = await db.recommendations.query({
+    KeyConditionExpression: "pk = :pk AND sk = :sk",
+    ExpressionAttributeValues: { ":pk": userId, ":sk": id },
+  });
+
+  return (
+    recommendations.Items.map((item) => ({ ...item, id: item?.sk }))?.[0] || {}
+  );
+};
+
 export async function deleteRecommendation(userId: string, id: string) {
   const db = await arc.tables();
   await db.recommendations.delete({ sk: id, pk: userId });
