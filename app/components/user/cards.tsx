@@ -28,7 +28,7 @@ const Cards: FC<CardsProps> = ({ cards, showEmptyCardsMsg, isAdmin }) => {
     return <div></div>;
   }
   return (
-    <div className="grid grid-cols-1 gap-2 md:grid-cols-3 md:gap-3 lg:grid-cols-4 lg:gap-4 ">
+    <div className="grid grid-cols-1 gap-2 md:grid-cols-3 md:gap-x-3 md:gap-y-5 lg:grid-cols-4 lg:gap-x-4  lg:gap-y-8">
       {cards?.map((card) => (
         <Card key={card.id} {...card} isAdmin={isAdmin} />
       ))}
