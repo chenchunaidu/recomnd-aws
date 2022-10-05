@@ -31,6 +31,15 @@ export const editRecommendationFormData: FormInputProps[] = [
     },
     helperText: "Enter description of the recommendation",
   },
+  {
+    label: "Image",
+    inputProps: {
+      id: "media",
+      name: "media",
+    },
+    helperText:
+      "There are so many images on internet. Please copy paste relevant url to this recommendation",
+  },
 ];
 
 export const createRecommendationValidationSchema = yup.object().shape({

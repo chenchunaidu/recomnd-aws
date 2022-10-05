@@ -106,9 +106,10 @@ export const updateRecommendation = async ({
   title,
   description,
   groupId,
+  media,
 }: Pick<
   Recommendations,
-  "title" | "description" | "groupId" | "id" | "userId"
+  "title" | "description" | "groupId" | "id" | "userId" | "media"
 >) => {
   const db = await arc.tables();
   const recommendation = await getRecommendationsById(userId, id);
@@ -117,6 +118,7 @@ export const updateRecommendation = async ({
     title,
     description,
     groupId,
+    media,
   });
   return updateRecommendation;
 };
