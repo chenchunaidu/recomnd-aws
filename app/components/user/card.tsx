@@ -18,7 +18,7 @@ const Card: FC<CardProps> = (recommendation) => {
   return (
     <div
       key={recommendation.id}
-      className={` group relative aspect-video  w-full  delay-200 duration-1000 ease-in-out  md:h-36 md:w-auto md:hover:scale-110   ${
+      className={` group relative aspect-video w-full  delay-200  duration-1000 ease-in-out md:aspect-[4/3] md:w-auto    ${
         deleteInProgress ? "grayscale" : ""
       }`}
     >
@@ -43,10 +43,10 @@ const Card: FC<CardProps> = (recommendation) => {
             <div
               className={`absolute bottom-0 w-full rounded-md bg-gradient-to-b from-transparent to-black px-2 pb-2 pt-16`}
             >
-              <div className="text-sm font-bold text-white line-clamp-1">
+              <div className="text-sm font-bold text-white line-clamp-2">
                 {recommendation.title}
               </div>
-              <div className="text-xs text-white text-opacity-60 line-clamp-3">
+              <div className="text-xs text-white text-opacity-60 line-clamp-6">
                 {recommendation.description}
               </div>
             </div>
