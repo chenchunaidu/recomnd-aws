@@ -8,8 +8,8 @@ import {
   createRecommendationValidationSchema,
 } from "~/components/recommendations/edit.data";
 import {
-  createRecommendation,
   getRecommendationsById,
+  updateRecommendation,
 } from "~/models/recommendation.server";
 import CreateRecommendation from "~/components/recommendations/new.form";
 import { requiredUser } from "~/lib/auth/auth";
@@ -57,11 +57,13 @@ export const action: ActionFunction = async ({ request, params }) => {
     ],
     createRecommendationValidationSchema
   );
+  console.log(formOutput);
   if (!errors) {
     try {
-      const res = await createRecommendation({
+      const res = await updateRecommendation({
         ...formOutput,
         userId: user.id,
+        id: params.recommendationId,
       });
       return redirect(`/home`);
     } catch (error) {

@@ -100,6 +100,27 @@ export const createRecommendation = async ({
   });
 };
 
+export const updateRecommendation = async ({
+  id,
+  userId,
+  title,
+  description,
+  groupId,
+}: Pick<
+  Recommendations,
+  "title" | "description" | "groupId" | "id" | "userId"
+>) => {
+  const db = await arc.tables();
+  const recommendation = await getRecommendationsById(userId, id);
+  const updateRecommendation = await db?.recommendations.put({
+    ...recommendation,
+    title,
+    description,
+    groupId,
+  });
+  return updateRecommendation;
+};
+
 export const getRecommendationsByUserId = async (userId: string) => {
   const db = await arc.tables();
   const recommendations = await db.recommendations.query({
