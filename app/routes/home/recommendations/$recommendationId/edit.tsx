@@ -57,7 +57,6 @@ export const action: ActionFunction = async ({ request, params }) => {
     ],
     createRecommendationValidationSchema
   );
-  console.log(formOutput);
   if (!errors) {
     try {
       const res = await updateRecommendation({
@@ -75,7 +74,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 };
 
 export default function EditRecommendationPage() {
-  const { groupOptions, formSchema } = useLoaderData();
+  const { groupOptions, formSchema, recommendation } = useLoaderData();
   const actionData = useActionData() as CreateRecommendationActionData;
   const transition = useTransition();
   return (
@@ -87,6 +86,7 @@ export default function EditRecommendationPage() {
         transition={transition}
         groupOptions={groupOptions}
         formSchema={formSchema || editRecommendationFormData}
+        groupDefaultValue={recommendation?.groupId}
       />
     </Container>
   );

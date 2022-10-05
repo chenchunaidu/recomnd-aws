@@ -2,9 +2,16 @@ import type { FC } from "react";
 import React from "react";
 import type { CardProps } from "./card";
 import Cards from "./cards";
-import { EllipsisHorizontalIcon, ShareIcon } from "@heroicons/react/24/solid";
+import {
+  EllipsisHorizontalIcon,
+  EllipsisVerticalIcon,
+  ShareIcon,
+} from "@heroicons/react/24/solid";
 import Button from "../common/button";
 import CopyToClipBoardButton from "../common/copy-to-clipboard";
+import Menu from "../common/menu/menu";
+import { Link } from "@remix-run/react";
+import GroupEllipsis from "./group-ellipsis";
 interface GroupProps {
   id: string;
   title: string;
@@ -31,10 +38,8 @@ const Group: FC<GroupProps> = ({
           <div className="text-sm text-slate-500">{description}</div>
         </div>
         {isAdmin ? (
-          <div className="flex space-x-2">
-            <Button className=" hover:text-white md:px-2.5" variant="link">
-              <EllipsisHorizontalIcon className="h-6 w-6" />
-            </Button>
+          <div className="flex -space-x-2">
+            <GroupEllipsis id={id} />
             <CopyToClipBoardButton copyText={groupLink || ""}>
               <ShareIcon className="h-5 w-5" />
             </CopyToClipBoardButton>

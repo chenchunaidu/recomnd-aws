@@ -30,6 +30,7 @@ export interface CreateRecommendationProps {
   submitButtonLabel?: string;
   submitButtonLabelTexts?: TransitionButtonText;
   formSchema?: CustomFormProps["inputs"];
+  groupDefaultValue?: string;
 }
 
 const EmptyGroupsMessage = () => (
@@ -56,6 +57,7 @@ const CreateRecommendation: FC<CreateRecommendationProps> = ({
     actionRedirecting: "Added redirecting...",
   },
   formSchema = createRecommendationFormData,
+  groupDefaultValue,
 }) => {
   return (
     <div className="flex flex-col space-y-4 rounded-md bg-white p-10 shadow-sm">
@@ -77,6 +79,7 @@ const CreateRecommendation: FC<CreateRecommendationProps> = ({
               name: "groupId",
               options: groupOptions,
               disabled: !groupOptions?.length,
+              defaultValue: groupDefaultValue,
             }}
           />
           <TransitionButton
