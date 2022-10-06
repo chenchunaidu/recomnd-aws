@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge";
 
 const sizes = {
   sm: "py-1 px-2",
-  md: "py-1 px-1.5 md:py-2.5 md:px-5",
+  md: "py-2.5 px-2.5 md:py-2.5 md:px-5",
   lg: "py-4 px-4",
   xl: "py-6 px-6",
   "2xl": "py-8",

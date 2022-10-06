@@ -8,11 +8,11 @@ interface AuthContainerProps {
 
 const AuthContainer: React.FC<AuthContainerProps> = ({ children }) => {
   return (
-    <div className="flex lg:p-10 h-full w-full bg-violet-700 flex-col lg:flex-row justify-center">
-      <div className="w-full hidden lg:flex item-center justify-center p-10">
+    <div className="flex h-full w-full flex-col justify-center md:bg-violet-700 lg:flex-row lg:p-10">
+      <div className="item-center hidden w-full justify-center p-10 lg:flex">
         <AuthInfo />
       </div>
-      <div className="w-full p-5 md:p-10 flex items-center justify-center">
+      <div className="flex w-full items-center justify-center p-5 md:p-10">
         {children}
       </div>
     </div>

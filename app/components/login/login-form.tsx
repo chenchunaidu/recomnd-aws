@@ -30,8 +30,8 @@ interface LoginProps {
 const Login: FC<LoginProps> = ({ actionData, transition }) => {
   return (
     <AuthContainer>
-      <div className="flex flex-col bg-white h-full w-full p-10 space-y-14">
-        <Image src={logo} className="h-16" />
+      <div className="flex h-full w-full flex-col space-y-4 bg-white p-5 md:space-y-14 md:p-10">
+        <Image src={logo} className="h-10 md:h-16" />
         <Form method="post">
           <div className="flex flex-col space-y-4">
             <CustomForm inputs={loginFormData} actionData={actionData} />
@@ -40,7 +40,7 @@ const Login: FC<LoginProps> = ({ actionData, transition }) => {
             </div>
             <Text>
               Don't have account?
-              <Link to="/sign-up" className="underline ml-2">
+              <Link to="/sign-up" className="ml-2 underline">
                 Create new account
               </Link>
             </Text>
