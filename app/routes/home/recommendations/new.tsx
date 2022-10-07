@@ -60,7 +60,7 @@ export default function CreateRecommendationPage() {
   const transition = useTransition();
 
   return (
-    <Container className="h-full w-full md:w-1/2">
+    <Container className="h-full w-full px-0 md:w-1/2">
       <CreateRecommendation
         actionData={actionData}
         transition={transition}
