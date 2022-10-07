@@ -32,7 +32,7 @@ const Card: FC<CardProps> = (recommendation) => {
               alt={recommendation.title}
               height="100%"
               width="100%"
-              className="h-full rounded-md object-cover object-top transition delay-150 duration-500 ease-in-out group-hover:scale-110"
+              className="h-full rounded-md object-cover object-top transition delay-150 duration-500 ease-in-out md:group-hover:scale-110"
             />
           )}
           {!recommendation.title && !recommendation.description ? (

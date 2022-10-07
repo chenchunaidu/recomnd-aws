@@ -1,10 +1,5 @@
 import type { ActionFunction, LoaderFunction } from "@remix-run/node";
-import {
-  Link,
-  useActionData,
-  useLoaderData,
-  useTransition,
-} from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import Button from "~/components/common/button";
 import Container from "~/components/common/container";
 import Heading from "~/components/common/heading";
@@ -40,8 +35,8 @@ export default function Homepage() {
 
   return (
     <Container className="space-y-4">
-      <div className="flex items-center justify-between p-4 md:p-0">
-        <Heading order="6">Recommendations</Heading>
+      <div className="flex items-center justify-between">
+        <Heading order="4">Recommendations</Heading>
         <div className="-space-x-2">
           <Link to="/home/recommendations/new">
             <Button variant="link">

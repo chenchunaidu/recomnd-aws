@@ -31,7 +31,7 @@ const Group: FC<GroupProps> = ({
   isAdmin = false,
 }) => {
   return (
-    <div className="space-y-4 px-4">
+    <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
           <div className="text-2xl font-semibold text-slate-800">{title}</div>

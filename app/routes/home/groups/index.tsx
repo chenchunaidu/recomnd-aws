@@ -18,7 +18,7 @@ export default function GroupsPage() {
 
   return (
     <Container className="space-y-4">
-      <div className="h-full w-full space-y-10 px-2">
+      <div className="h-full w-full space-y-4 md:space-y-10">
         <div className="flex w-full justify-between">
           <Heading order="6">Groups</Heading>
           <Link to="/home/groups/new">
