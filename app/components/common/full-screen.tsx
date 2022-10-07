@@ -9,7 +9,9 @@ interface FullscreenProps {
 
 const Fullscreen: React.FC<FullscreenProps> = ({ children, className }) => {
   return (
-    <div className={twMerge(`h-screen w-screen`, className)}>{children}</div>
+    <div className={twMerge(`h-full-screen w-screen`, className)}>
+      {children}
+    </div>
   );
 };
 

@@ -29,7 +29,7 @@ const CreateGroup: FC<CreateGroupProps> = ({
   redirectTo,
 }) => {
   return (
-    <div className="flex flex-col space-y-4 rounded-md bg-white p-2 shadow-sm md:p-10">
+    <div className="flex flex-col space-y-4 rounded-md bg-white p-10 shadow-sm">
       <div>
         <Heading order="6" className="text-slate-800">
           Create new group
