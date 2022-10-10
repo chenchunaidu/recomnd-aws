@@ -1,17 +1,24 @@
 import arc from "@architect/functions";
-import invariant from "tiny-invariant";
-import { v4 as uuidv4 } from "uuid";
+import randomstring from "randomstring";
 
 export type Group = {
   id: number;
   userId: string;
   title: string;
   description: string;
+  createdAt: number;
 };
 
 export const createGroup = async ({ userId, ...group }: Group) => {
   const db = await arc.tables();
-  const newGroup = await db.groups.put({ pk: userId, ...group, sk: uuidv4() });
+  const time = Date.now();
+  const id = time + randomstring.generate(4);
+  const newGroup = await db.groups.put({
+    pk: userId,
+    ...group,
+    sk: id,
+    createdAt: time,
+  });
   return newGroup;
 };
 
@@ -20,6 +27,7 @@ export const getGroupsByUserId = async (userId: string) => {
   const groups = await db.groups.query({
     KeyConditionExpression: "pk = :pk",
     ExpressionAttributeValues: { ":pk": userId },
+    ScanIndexForward: false,
   });
   return groups.Items.map((group) => ({ ...group, id: group.sk }));
 };

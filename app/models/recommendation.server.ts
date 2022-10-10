@@ -2,7 +2,7 @@ import arc from "@architect/functions";
 import invariant from "tiny-invariant";
 import type { OpenGraphImage } from "open-graph-scraper";
 import ogs from "open-graph-scraper";
-import { v4 as uuidv4 } from "uuid";
+import randomstring from "randomstring";
 
 interface Metadata {
   title: string;
@@ -18,7 +18,7 @@ export type Recommendations = {
   title: string;
   description: string;
   media: string;
-  createdAt: string;
+  createdAt: number;
   fullMeta: string;
   scrapStatus: "inprogress" | "failed" | "success";
 };
@@ -82,9 +82,11 @@ export const createRecommendation = async ({
   groupId,
 }: Pick<Recommendations, "url" | "userId" | "groupId">) => {
   const db = await arc.tables();
+  const time = Date.now();
+  const id = time + randomstring.generate(4);
   const newRecommendation = await db?.recommendations.put({
     url,
-    sk: uuidv4(),
+    sk: id,
     pk: userId,
     title: "",
     description: "",
@@ -92,6 +94,7 @@ export const createRecommendation = async ({
     scrapStatus: "inprogress",
     fullMeta: {},
     groupId,
+    createdAt: time,
   });
 
   await arc.queues.publish({
@@ -128,6 +131,7 @@ export const getRecommendationsByUserId = async (userId: string) => {
   const recommendations = await db.recommendations.query({
     KeyConditionExpression: "pk = :pk",
     ExpressionAttributeValues: { ":pk": userId },
+    ScanIndexForward: false,
   });
   return recommendations.Items.map((item) => ({ ...item, id: item?.sk }));
 };
