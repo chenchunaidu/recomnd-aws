@@ -36,7 +36,9 @@ export default function Homepage() {
   return (
     <Container className="space-y-4">
       <div className="flex items-center justify-between">
-        <Heading order="4">Recommendations</Heading>
+        <Heading order="4" className="md:text-2xl">
+          Recommendations
+        </Heading>
         <div className="-space-x-2">
           <Link to="/home/recommendations/new">
             <Button variant="link">

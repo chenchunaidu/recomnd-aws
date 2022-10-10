@@ -7,6 +7,7 @@ export type Group = {
   title: string;
   description: string;
   createdAt: number;
+  image: string;
 };
 
 export const createGroup = async ({ userId, ...group }: Group) => {

@@ -2,6 +2,7 @@ import type { Group } from "~/models/group.server";
 import { Link } from "@remix-run/react";
 import type { FC } from "react";
 import React from "react";
+import Heading from "../common/heading";
 
 interface HomeGroupProps extends Group {
   link?: string;
@@ -12,14 +13,21 @@ const HomeGroup: FC<Omit<HomeGroupProps, "userId">> = ({
   description,
   id,
   link,
+  image,
 }) => {
   return (
-    <div className="space-y-1 rounded-md bg-violet-200 p-4">
+    <div
+      className={`flex aspect-video items-center justify-center space-y-1 rounded-md bg-violet-700 p-4 md:h-36`}
+      style={{
+        backgroundImage: `url(${image})`,
+        backgroundSize: "cover",
+        backgroundBlendMode: "soft-light",
+      }}
+    >
       <Link to={`${link}/${id}`}>
-        <div className="text-lg font-semibold text-violet-700">{title}</div>
-        <div className="text-sm text-violet-600 line-clamp-4">
-          {description}
-        </div>
+        <Heading className="capitalize text-white line-clamp-1" order="3">
+          {title}
+        </Heading>
       </Link>
     </div>
   );

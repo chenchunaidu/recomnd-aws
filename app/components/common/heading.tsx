@@ -11,9 +11,9 @@ const styles = {
   "1": "text-5xl md:text-7xl",
   "2": "text-4xl md:text-6xl",
   "3": "text-3xl md:text-5xl",
-  "4": "text-2xl md:text-4xl",
-  "5": "text-xl md:text-3xl",
-  "6": "text-lg md:text-2xl",
+  "4": "text-2xl md:text-3xl",
+  "5": "text-xl md:text-2xl",
+  "6": "text-lg md:text-xl",
 };
 
 const Heading: React.FC<HeadingProps> = ({

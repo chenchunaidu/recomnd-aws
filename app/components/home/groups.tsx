@@ -34,7 +34,7 @@ const HomeGroups: FC<HomeGroupsProps> = ({
 
   return (
     <div>
-      <div className="grid grid-cols-1 gap-4 overflow-scroll md:grid-cols-3">
+      <div className="grid grid-cols-2 gap-4 overflow-scroll md:grid-cols-4">
         {groups?.map((group) => (
           <HomeGroup
             title={group.title}
@@ -42,6 +42,8 @@ const HomeGroups: FC<HomeGroupsProps> = ({
             id={group.id}
             key={group.id}
             link={link}
+            image={group.image}
+            createdAt={group.createdAt}
           />
         ))}
       </div>

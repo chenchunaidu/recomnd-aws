@@ -3,7 +3,7 @@ import {
   useSearchParams,
   useTransition,
 } from "@remix-run/react";
-import type { ActionFunction } from "@remix-run/server-runtime";
+import { ActionFunction, json } from "@remix-run/server-runtime";
 import { redirect } from "@remix-run/server-runtime";
 import { validateFormData } from "~/components/common/form/utils";
 import CreateGroup from "~/components/group/create-new-group";
@@ -25,6 +25,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     validationSchema
   );
   const redirectTo = formData.get("redirectTo") as string;
+
   if (!errors) {
     try {
       const res = await createGroup({ ...formOutput, userId: user.id });
@@ -34,7 +35,7 @@ export const action: ActionFunction = async ({ request, params }) => {
       return {};
     }
   }
-  return { errors, data: formOutput };
+  return json({ errors, data: formOutput }, { status: 500 });
 };
 
 export default function CreateGroupPage() {
