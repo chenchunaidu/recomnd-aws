@@ -18,7 +18,7 @@ export default function GroupsPage() {
   const { groups, user } = useLoaderData();
   const location =
     typeof window !== "undefined" ? window?.location?.origin : "";
-  const link = `${location}/users/${user.userId}/groups`;
+  const link = `${location}/users/${user.id}/groups`;
 
   return (
     <Container className="space-y-4 ">
