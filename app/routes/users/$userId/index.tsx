@@ -15,7 +15,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 export const meta: MetaFunction = ({ data }) => {
   const { user = {}, groups = [] } = data;
   const title = `${user?.name}'s recommendations`;
-  const avatar = data?.user?.avatar;
+  const avatar = user?.avatar;
   const userGroupTitles = groups?.map(
     (group: Group) => (user?.name || "") + " " + (group?.title || "")
   );
@@ -24,7 +24,7 @@ export const meta: MetaFunction = ({ data }) => {
     description: userGroupTitles,
     key: userGroupTitles.join(" | "),
     "twitter:site": title,
-    "twitter:card": data.avatar,
+    "twitter:card": avatar,
     "twitter:description": userGroupTitles,
     "twitter:image": avatar,
     "og:description": userGroupTitles,
