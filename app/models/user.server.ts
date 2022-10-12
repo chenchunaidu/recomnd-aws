@@ -36,10 +36,23 @@ export async function createUser({ id, ...user }: User) {
   });
 
   const newUser = await getUserById(id);
+  console.log(newUser, id, user);
   invariant(user, `User not found after being created. This should not happen`);
 
   return newUser;
 }
+
+export const updateUser = async (user: Partial<User>) => {
+  if (user?.id) {
+    const currentUser = await getUserById(user?.id);
+    const db = await arc.tables();
+    await db.user.put({
+      ...currentUser,
+      pk: user?.id,
+      ...user,
+    });
+  }
+};
 
 export async function deleteUser(id: string) {
   const db = await arc.tables();
