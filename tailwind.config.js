@@ -2,7 +2,11 @@
 module.exports = {
   content: ["./app/**/*.{ts,tsx,jsx,js}"],
   theme: {
-    extend: {},
+    extend: {
+      height: {
+        "full-screen": "",
+      },
+    },
   },
   plugins: [require("@tailwindcss/line-clamp")],
 };

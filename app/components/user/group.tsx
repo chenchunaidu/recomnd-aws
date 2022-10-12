@@ -2,14 +2,24 @@ import type { FC } from "react";
 import React from "react";
 import type { CardProps } from "./card";
 import Cards from "./cards";
-import { EllipsisHorizontalIcon } from "@heroicons/react/24/solid";
+import {
+  EllipsisHorizontalIcon,
+  EllipsisVerticalIcon,
+  ShareIcon,
+} from "@heroicons/react/24/solid";
 import Button from "../common/button";
+import CopyToClipBoardButton from "../common/copy-to-clipboard";
+import Menu from "../common/menu/menu";
+import { Link } from "@remix-run/react";
+import GroupEllipsis from "./group-ellipsis";
 interface GroupProps {
   id: string;
   title: string;
   description: string;
   recommendations: CardProps[];
+  groupLink?: string;
   view: "grid" | "flex";
+  isAdmin?: boolean;
 }
 
 const Group: FC<GroupProps> = ({
@@ -17,30 +27,28 @@ const Group: FC<GroupProps> = ({
   description,
   recommendations,
   id,
-  view = "grid",
+  groupLink,
+  isAdmin = false,
 }) => {
   return (
-    <div className="space-y-4 px-4">
-      <div className="flex justify-between items-center">
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
         <div>
-          <div className="font-semibold text-2xl text-slate-800">{title}</div>
+          <div className="text-2xl font-semibold text-slate-800">{title}</div>
           <div className="text-sm text-slate-500">{description}</div>
         </div>
-        <div className="flex space-x-2">
-          <Button className=" md:px-2.5 hover:text-white" variant="link">
-            <EllipsisHorizontalIcon className="h-6 w-6" />
-          </Button>
-        </div>
+        {isAdmin ? (
+          <div className="flex -space-x-2">
+            <GroupEllipsis id={id} />
+            <CopyToClipBoardButton copyText={groupLink || ""}>
+              <ShareIcon className="h-5 w-5" />
+            </CopyToClipBoardButton>
+          </div>
+        ) : (
+          <div></div>
+        )}
       </div>
-      <div
-        className={
-          view === "flex"
-            ? `flex space-x-8 overflow-x-scroll snap-x snap-mandatory`
-            : "grid md:grid-cols-3 lg:grid-cols-4 grid-cols-1 gap-2 md:gap-3 lg:gap-4 "
-        }
-      >
-        <Cards cards={recommendations} />
-      </div>
+      <Cards cards={recommendations} />
     </div>
   );
 };

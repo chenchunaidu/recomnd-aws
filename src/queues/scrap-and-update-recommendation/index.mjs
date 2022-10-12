@@ -1,5 +1,6 @@
 // learn more about event functions here: https://arc.codes/events
 import { scrapAndUpdateMeta } from "./scrap.mjs";
+
 export async function handler(event) {
   await Promise.all(
     event?.Records.map(async (record) => {

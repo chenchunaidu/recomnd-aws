@@ -93,3 +93,12 @@ export const requiredUser = async (request: Request): Promise<User> => {
   }
   return userAuthenticated.user;
 };
+
+export async function logout(request: Request) {
+  console.log("coming");
+  return redirect("/login", {
+    headers: {
+      "Set-Cookie": await supabaseToken.serialize("sd"),
+    },
+  });
+}

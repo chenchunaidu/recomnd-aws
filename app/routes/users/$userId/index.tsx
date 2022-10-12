@@ -1,10 +1,6 @@
 import type { Group } from "~/models/group.server";
 import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import Container from "~/components/common/container";
-import Fullscreen from "~/components/common/full-screen";
-import GroupsComp from "~/components/user/groups";
-import Profile from "~/components/user/profile";
 import { getRecommendationsByUserId } from "~/models/recommendation.server";
 import { getUserById } from "~/models/user.server";
 import Cards from "~/components/user/cards";
@@ -19,7 +15,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 export const meta: MetaFunction = ({ data }) => {
   const { user = {}, groups = [] } = data;
   const title = `${user?.name}'s recommendations`;
-  const avatar = data?.user;
+  const avatar = data?.user?.avatar;
   const userGroupTitles = groups?.map(
     (group: Group) => (user?.name || "") + " " + (group?.title || "")
   );
@@ -40,14 +36,7 @@ export const meta: MetaFunction = ({ data }) => {
 };
 
 export default function UserPage() {
-  const { cards, user } = useLoaderData();
+  const { cards } = useLoaderData();
 
-  return (
-    <Fullscreen className="flex flex-col items-center">
-      <Container className="space-y-4">
-        <Profile user={user} />
-        <Cards cards={cards} />
-      </Container>
-    </Fullscreen>
-  );
+  return <Cards cards={cards} />;
 }

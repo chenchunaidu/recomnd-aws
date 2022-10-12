@@ -9,7 +9,7 @@ interface ActionData {
   errors?: Record<string, string>;
 }
 
-interface CustomFormProps {
+export interface CustomFormProps {
   inputs: FormInputProps[];
   actionData?: ActionData;
 }

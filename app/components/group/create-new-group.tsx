@@ -20,11 +20,16 @@ export interface CreateGroupActionData {
 export interface CreateGroupProps {
   actionData: CreateGroupActionData;
   transition?: Transition;
+  redirectTo?: string;
 }
 
-const CreateGroup: FC<CreateGroupProps> = ({ actionData, transition }) => {
+const CreateGroup: FC<CreateGroupProps> = ({
+  actionData,
+  transition,
+  redirectTo,
+}) => {
   return (
-    <div className="flex flex-col space-y-4 rounded-md bg-white p-2 md:p-10 shadow-sm">
+    <div className="flex flex-col space-y-4 rounded-md bg-white p-10 shadow-sm">
       <div>
         <Heading order="6" className="text-slate-800">
           Create new group
@@ -33,7 +38,7 @@ const CreateGroup: FC<CreateGroupProps> = ({ actionData, transition }) => {
       <Form method="post">
         <div className="flex flex-col space-y-4">
           <CustomForm inputs={createGroupFormData} actionData={actionData} />
-
+          <input type="hidden" name="redirectTo" value={redirectTo} />
           <TransitionButton
             type="submit"
             variant="solid"

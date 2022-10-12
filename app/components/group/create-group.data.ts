@@ -13,14 +13,11 @@ export const createGroupFormData: FormInputProps[] = [
     },
   },
   {
-    label: "Description",
-    formInputType: "textarea",
+    label: "Image URL",
     inputProps: {
-      id: "description",
-      name: "description",
-      rows: 5,
-      placeholder:
-        "I like all types of music from old country music to new punk music. here are my top suggestions",
+      id: "image",
+      name: "image",
+      placeholder: "Enter url of the image",
     },
   },
 ];
@@ -31,5 +28,5 @@ export const validationSchema = yup.object().shape({
     .required()
     .min(3, "Title should be longer than 3 letter")
     .max(250),
-  description: yup.string().required("Description is required"),
+  image: yup.string().url("Image url should be link to the image"),
 });

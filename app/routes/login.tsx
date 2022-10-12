@@ -76,7 +76,7 @@ export default function LoginPage() {
   const transition = useTransition();
 
   return (
-    <Fullscreen className="flex items-center justify-center">
+    <Fullscreen className="flex justify-center">
       <Login actionData={actionData} transition={transition} />
     </Fullscreen>
   );
