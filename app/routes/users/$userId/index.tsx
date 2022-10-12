@@ -15,7 +15,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 export const meta: MetaFunction = ({ data }) => {
   const { user = {}, groups = [] } = data;
   const title = `${user?.name}'s recommendations`;
-  const avatar = data?.user;
+  const avatar = data?.user?.avatar;
   const userGroupTitles = groups?.map(
     (group: Group) => (user?.name || "") + " " + (group?.title || "")
   );
